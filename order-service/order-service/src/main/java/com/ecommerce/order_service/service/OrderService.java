@@ -1,0 +1,12 @@
+package com.ecommerce.order_service.service;
+
+import com.ecommerce.order_service.model.Order;
+
+import java.util.List;
+
+public interface OrderService {
+    Order placeOrder(Order order);
+    List<Order> getOrdersByUserId(Long userId);
+    Order getOrderById(Long id);
+}
+
