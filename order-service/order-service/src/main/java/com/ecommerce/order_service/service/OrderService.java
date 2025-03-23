@@ -5,7 +5,9 @@ import com.ecommerce.order_service.model.Order;
 import java.util.List;
 
 public interface OrderService {
-    Order placeOrder(Order order);
+//    Order placeOrder(Order order);
+Order placeOrder(Order order, String email);
+
     List<Order> getOrdersByUserId(Long userId);
     Order getOrderById(Long id);
 }
