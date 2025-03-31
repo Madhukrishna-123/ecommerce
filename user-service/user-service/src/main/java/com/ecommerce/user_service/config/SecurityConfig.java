@@ -1,7 +1,6 @@
 package com.ecommerce.user_service.config;
 
 
-import com.ecommerce.user_service.config.JwtAuthenticationFilter;
 import com.ecommerce.user_service.service.UserDetailsServiceImpl;
 import org.springframework.context.annotation.*;
 import org.springframework.security.authentication.*;

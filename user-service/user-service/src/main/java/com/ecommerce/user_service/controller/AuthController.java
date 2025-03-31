@@ -5,16 +5,17 @@ import com.ecommerce.user_service.model.*;
 import com.ecommerce.user_service.service.ForgotPasswordService;
 import com.ecommerce.user_service.service.UserDetailsServiceImpl;
 import com.ecommerce.user_service.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
-
 
 @RestController
 @RequestMapping("/api/users")
@@ -86,4 +87,11 @@ public class AuthController {
         return resetSuccessful ? ResponseEntity.ok("Password successfully reset!") :
                 ResponseEntity.badRequest().body("Invalid OTP or email!");
     }
+
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(HttpServletRequest request) {
+        SecurityContextHolder.clearContext();
+        return ResponseEntity.ok("Logged out successfully");
+    }
+
 }
