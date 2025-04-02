@@ -94,4 +94,49 @@ public class AuthController {
         return ResponseEntity.ok("Logged out successfully");
     }
 
+    private String extractTokenFromRequest(HttpServletRequest request) {
+        String authHeader = request.getHeader("Authorization");
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            return authHeader.substring(7);  // Remove "Bearer " prefix to get the token
+        }
+        return null;  // If no token is found
+    }
+    @GetMapping("/userdetails")
+    public ResponseEntity<?> getUserDetails(HttpServletRequest request) {
+        try {
+            // Correctly extract the JWT token from the request
+            String token = extractTokenFromRequest(request);
+            System.out.println("USER TOKEN: " + token);
+
+            if (token == null) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token is missing");
+            }
+
+            // Extract the username (email) from the token
+            String username = jwtUtil.extractUsername(token);
+            System.out.println("Extracted Username: " + username);
+
+            // Validate the token with the extracted username (email)
+            if (username == null || !jwtUtil.validateToken(token, userDetailsService.loadUserByUsername(username))) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid or expired token");
+            }
+
+            // Load the full user data from your user service based on the username (which is the email)
+            User user = userService.getUserByUsername(username);  // Get the user by email (which is username in the token)
+
+            if (user == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+            }
+
+            // Print the full user data to the console (as a JSON-like string)
+            System.out.println("User Details: " + user);
+
+            // Return the full user data as a response (this will return the user object in JSON format)
+            return ResponseEntity.ok(user);  // This will return the user with "username" as "john_doe"
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while fetching user details");
+        }
+    }
+
+
 }

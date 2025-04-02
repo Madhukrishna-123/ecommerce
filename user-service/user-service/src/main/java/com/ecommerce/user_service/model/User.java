@@ -16,8 +16,10 @@ public class User implements UserDetails {
     private String username;
     private String email;
     private String password;
+    private String firstName;
+    private String secondName;
 
-    // Getters & Setters
+
 
     public void setUsername(String username) {
         this.username = username;
@@ -41,6 +43,22 @@ public class User implements UserDetails {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getSecondName() {
+        return secondName;
+    }
+
+    public void setSecondName(String secondName) {
+        this.secondName = secondName;
     }
 
     @Override
