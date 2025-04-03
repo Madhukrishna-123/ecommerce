@@ -17,6 +17,20 @@ public class CartItem {
     private String productName;
     private int quantity;
     private double price;
+    private String imageUrl;
+
+
+    public CartItem(){
+
+    }
+    public CartItem(Long userId, Long productId, String productName, int quantity, double price, String imageUrl) {
+        this.userId = userId;
+        this.productId = productId;
+        this.productName = productName;
+        this.quantity = quantity;
+        this.price = price;
+        this.imageUrl = imageUrl;
+    }
 
     public Long getId() {
         return id;
@@ -64,5 +78,11 @@ public class CartItem {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+    public String getImageUrl() {
+        return imageUrl;
     }
 }

@@ -1,5 +1,6 @@
 package com.ecommerce.cart_service.controller;
 
+import com.ecommerce.cart_service.exception.ItemNotFoundException;
 import com.ecommerce.cart_service.model.CartItem;
 import com.ecommerce.cart_service.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,10 +29,17 @@ public class CartController {
 
     @DeleteMapping("/remove")
     public ResponseEntity<String> removeItem(@RequestParam Long userId, @RequestParam Long productId) {
-        cartService.removeItem(userId, productId);
-        return ResponseEntity.ok("Item removed from cart");
+//        cartService.removeItem(userId, productId);
+//        return ResponseEntity.ok("Item removed from cart");
+        try {
+            cartService.removeItem(userId, productId);
+            return ResponseEntity.ok("Item removed from cart");
+        } catch (ItemNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+
     }
-        //changes
+
     @DeleteMapping("/clear/{userId}")
     public ResponseEntity<String> clearCart(@PathVariable Long userId) {
         cartService.clearCart(userId);
