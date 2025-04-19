@@ -1,7 +1,6 @@
 package com.ecommerce.order_service.model;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDate;
 
 @Entity
@@ -10,24 +9,26 @@ public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long orderId;
 
     private Long userId;
     private LocalDate orderDate;
-    private Double totalAmount;
+    private Long productId;
+    @Transient
+    private String productName;
 
-    // Can hold product IDs or details as JSON string
-    @Lob
-    private String itemsJson;
+    @Transient
+    private Double productPrice;
+
+
 
     // Getters & Setters
-
     public Long getId() {
-        return id;
+        return orderId;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.orderId = id;
     }
 
     public Long getUserId() {
@@ -46,19 +47,35 @@ public class Order {
         this.orderDate = orderDate;
     }
 
-    public Double getTotalAmount() {
-        return totalAmount;
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
     }
 
-    public void setTotalAmount(Double totalAmount) {
-        this.totalAmount = totalAmount;
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 
-    public String getItemsJson() {
-        return itemsJson;
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
-    public void setItemsJson(String itemsJson) {
-        this.itemsJson = itemsJson;
+    public void setProductPrice(Double productPrice) {
+        this.productPrice = productPrice;
+    }
+
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public Long getProductId() {
+        return productId;
+    }
+
+    public Double getProductPrice() {
+        return productPrice;
+    }
+
+    public String getProductName() {
+        return productName;
     }
 }
